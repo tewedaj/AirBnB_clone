@@ -1,18 +1,26 @@
 #!/usr/bin/python3
-"""model test for Amenity"""
-from models.amenity import Amenity
+"""
+Test file for user class
+"""
+
 import unittest
+from models.amenity import Amenity
+from models.base_model import BaseModel
 
 
-class TestAmenity_instantiation(unittest.TestCase):
-    """test for amenity instantination"""
+class TestClass(unittest.TestCase):
+    """Test cases"""
 
-    def test_no_args_instantiates(self):
-        self.assertEqual(Amenity, type(Amenity()))
+    def test_create_istance(self):
+        """create a new instance"""
+        new_state = Amenity()
+        self.assertIsInstance(new_state, Amenity)
 
-    def test_name_is_public_class_attribute(self):
-        am = Amenity()
-        self.assertEqual(str, type(Amenity.name))
-        self.assertIn("name", dir(Amenity()))
-if __name__ == "__main__":
+    def test_create_istance2(self):
+        """create a new instance"""
+        new_state = Amenity()
+        self.assertIsInstance(new_state, BaseModel)
+
+
+if __name__ == '__main__':
     unittest.main()

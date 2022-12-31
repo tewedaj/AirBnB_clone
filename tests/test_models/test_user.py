@@ -1,28 +1,26 @@
 #!/usr/bin/python3
-"""Module tests for usr.py"""
+"""
+Test file for user class
+"""
 
-import models
 import unittest
 from models.user import User
+from models.base_model import BaseModel
 
 
-class testUser_instantination(unittest.TestCase):
-    """Test for instantiation"""
+class TestClass(unittest.TestCase):
+    """Test cases"""
 
-    def test_no_args_instantinates(self):
-        self.assertEqual(User, type(User()))
+    def test_create_istance(self):
+        """create a new instance"""
+        new_user = User()
+        self.assertIsInstance(new_user, User)
 
-    def test_email_is_public_str(self):
-        self.assertEqual(str, type(User.email))
+    def test_create_istance2(self):
+        """create a new instance"""
+        new_user = User()
+        self.assertIsInstance(new_user, BaseModel)
 
-    def test_password_is_public_str(self):
-        self.assertEqual(str, type(User.password))
 
-    def test_first_name_is_public_str(self):
-        self.assertEqual(str, type(User.first_name))
-
-    def test_last_name_is_public_str(self):
-        self.assertEqual(str, type(User.last_name))
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -1,22 +1,41 @@
 #!/usr/bin/python3
+"""
+Test file for city class
+"""
+
 import unittest
 from models.city import City
+from models.base_model import BaseModel
 
 
-class TestCity_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the City class."""
+class TestClass(unittest.TestCase):
+    """Test cases"""
 
-    def test_no_args_instantiates(self):
-        self.assertEqual(City, type(City()))
+    def setUp(self):
+        self.city = City()
+        return super().setUp()
 
-    def test_id_is_public_str(self):
-        self.assertEqual(str, type(City().id))
+    def tearDown(self):
+        del(self.city)
+        return super().tearDown()
 
-    def test_state_id_is_public_class_attribute(self):
-        cy = City()
-        self.assertEqual(str, type(City.state_id))
-        self.assertIn("state_id", dir(cy))
-        self.assertNotIn("state_id", cy.__dict__)
+    def test_create_istance(self):
+        """create a new instance"""
+        self.assertIsInstance(self.city, City)
 
-if __name__ == "__main__":
+    def test_create_istance_check_parent(self):
+        """check if it's instance of parent"""
+        self.assertIsInstance(self.city, BaseModel)
+
+    def test_class_attribut(self):
+        """initialze class attribute"""
+        self.city.name = "kigali"
+        self.assertIs(self.city.name, 'kigali')
+
+    def test_parent_of_city(self):
+        """check if city is parent of BaseModel"""
+        self.assertEqual(isinstance(self.city, BaseModel), True)
+
+
+if __name__ == '__main__':
     unittest.main()

@@ -1,36 +1,70 @@
 #!/usr/bin/python3
-"""test module for filestorage """
-import os
+"""
+Test file for the base_mode class
+"""
+
 import unittest
-
-import models
-from models.base_model import BaseModel
-from models.user import User
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+import os
+
+class TestClass(unittest.TestCase):
+    """Test cases"""
+
+    def setUp(self):
+        self.storage = FileStorage()
+        self.model = BaseModel()
+        return super().setUp()
+
+    def tearDown(self):
+        del(self.storage)
+        del(self.model)
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+        return super().tearDown()
+
+    def test_is_instance(self):
+        """isInstance"""
+
+        self.assertIsInstance(self.storage, FileStorage)
+
+    def test_find_object_success(self):
+
+        self.storage.new(self.model)
+        self.assertIs(
+            self.storage.find('BaseModel', self.model.id), self.model
+            )
+
+    def test_find_object_not_found(self):
+
+        self.storage.new(self.model)
+        self.assertRaisesRegex(
+            Exception,
+            'no instance found',
+            self.storage.find,
+            'BaseModel',
+            'does-not-exist')
+
+    def test_reset(self):
+        """reset"""
+        pass
+
+    def test_new_method(self):
+        """new"""
+        pass
+
+    def test_save_method(self):
+        """save method"""
+        pass
+
+    def test_reload_function(self):
+        """reload function"""
+        pass
+
+    def test_function_all(self):
+        """all functions"""
+        pass
 
 
-class testFilestorage_instantination(unittest.TestCase):
-    """unittest for instantiation of file storage class"""
-
-    def test_Filestorge_instantination_no_args(self):
-        self.assertEqual(type(FileStorage()), FileStorage)
-
-    def test_Filestorage_instantination_with_args(self):
-        with self.assertRaises(TypeError):
-            FileStorage(None)
-
-    def test_FileStorage_file_path_is_private_str(self):
-        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
-
-    def test_FileStorage_objects_is_private_dict(self):
-        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
-
-    def test_Filestorage_intalization(self):
-        self.assertEqual(type(models.storage), FileStorage)
-
-
-class TestFilestorage_methods(unittest.TestCase):
-    """unitest for the methdos of Filestorage"""
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

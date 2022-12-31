@@ -1,20 +1,26 @@
 #!/usr/bin/python3
+"""
+Test file for user class
+"""
 
 import unittest
 from models.state import State
+from models.base_model import BaseModel
 
 
-class TestState_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the State class."""
+class TestClass(unittest.TestCase):
+    """Test cases"""
 
-    def test_no_args_instantiates(self):
-        self.assertEqual(State, type(State()))
+    def test_create_istance(self):
+        """create a new instance"""
+        new_state = State()
+        self.assertIsInstance(new_state, State)
 
-    def test_name_is_public_class_attribute(self):
-        st = State()
-        self.assertEqual(str, type(State.name))
-        self.assertIn("name", dir(st))
-        self.assertNotIn("name", st.__dict__)
+    def test_create_istance2(self):
+        """create a new instance"""
+        new_state = State()
+        self.assertIsInstance(new_state, BaseModel)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     unittest.main()
