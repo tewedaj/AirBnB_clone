@@ -1,19 +1,20 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+
+import unittest
 from models.state import State
 
 
-class test_state(test_basemodel):
-    """ """
+class TestState_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the State class."""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "State"
-        self.value = State
+    def test_no_args_instantiates(self):
+        self.assertEqual(State, type(State()))
 
-    def test_name3(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+    def test_name_is_public_class_attribute(self):
+        st = State()
+        self.assertEqual(str, type(State.name))
+        self.assertIn("name", dir(st))
+        self.assertNotIn("name", st.__dict__)
+
+if __name__ == "__main__":
+    unittest.main()

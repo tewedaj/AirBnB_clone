@@ -1,24 +1,22 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+import unittest
 from models.city import City
 
 
-class test_City(test_basemodel):
-    """ """
+class TestCity_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the City class."""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "City"
-        self.value = City
+    def test_no_args_instantiates(self):
+        self.assertEqual(City, type(City()))
 
-    def test_state_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.state_id), str)
+    def test_id_is_public_str(self):
+        self.assertEqual(str, type(City().id))
 
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+    def test_state_id_is_public_class_attribute(self):
+        cy = City()
+        self.assertEqual(str, type(City.state_id))
+        self.assertIn("state_id", dir(cy))
+        self.assertNotIn("state_id", cy.__dict__)
+
+if __name__ == "__main__":
+    unittest.main()

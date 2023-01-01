@@ -1,19 +1,18 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""model test for Amenity"""
 from models.amenity import Amenity
+import unittest
 
 
-class test_Amenity(test_basemodel):
-    """ """
+class TestAmenity_instantiation(unittest.TestCase):
+    """test for amenity instantination"""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
+    def test_no_args_instantiates(self):
+        self.assertEqual(Amenity, type(Amenity()))
 
-    def test_name2(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+    def test_name_is_public_class_attribute(self):
+        am = Amenity()
+        self.assertEqual(str, type(Amenity.name))
+        self.assertIn("name", dir(Amenity()))
+if __name__ == "__main__":
+    unittest.main()
