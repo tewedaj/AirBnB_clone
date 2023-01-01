@@ -7,6 +7,7 @@ import shlex
 import ast
 import models
 from models.base_model import BaseModel
+
 # Note: no need to import FileStorage if __objects is called
 # from models.storage
 # Reminder: models.storage is the instance of FileStorage
@@ -24,14 +25,16 @@ class HBNBCommand(cmd.Cmd):
     class that defines the "entry point of the command interpreter"
     """
 
-    prompt = '(hbnb) '
-    className = {'BaseModel': BaseModel,
-                 'User': User,
-                 'State': State,
-                 'City': City,
-                 'Amenity': Amenity,
-                 'Place': Place,
-                 'Review': Review}
+    prompt = "(hbnb) "
+    className = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review,
+    }
 
     def do_create(self, arg):
         """Create command to create an instance/object of a class"""
@@ -62,11 +65,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0]+'.'+args[1] not in models.storage\
-                                              ._FileStorage__objects.keys():
+        elif args[0] + "." + args[1] not in models.storage._FileStorage__objects.keys():
             print("** no instance found **")
         else:
-            print(models.storage._FileStorage__objects[args[0]+'.'+args[1]])
+            print(models.storage._FileStorage__objects[args[0] + "." + args[1]])
 
     def do_destroy(self, arg):
         """Destroy command to delete an instance"""
@@ -83,11 +85,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0]+'.'+args[1] not in models.storage\
-                                              ._FileStorage__objects.keys():
+        elif args[0] + "." + args[1] not in models.storage._FileStorage__objects.keys():
             print("** no instance found **")
         else:
-            del models.storage._FileStorage__objects[args[0]+'.'+args[1]]
+            del models.storage._FileStorage__objects[args[0] + "." + args[1]]
             models.storage.save()
 
     def do_all(self, arg):
@@ -108,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 list_objs = []
                 for key, obj in models.storage._FileStorage__objects.items():
-                    if arg == key.split('.')[0]:
+                    if arg == key.split(".")[0]:
                         list_objs.append(str(obj))
                 if len(list_objs) > 0:
                     print(list_objs)
@@ -126,49 +127,53 @@ class HBNBCommand(cmd.Cmd):
         update an instance based on his ID
         Note: d = ast.literal_eval(re.search('({.+})', update_dict).group(0))
         """
-        args = arg.split('.', 1)
+        args = arg.split(".", 1)
         # print("default: {}".format(args))
         if args[0] in HBNBCommand.className.keys():
-            if args[1].strip('()') == 'all':
+            if args[1].strip("()") == "all":
                 self.do_all(args[0])
-            elif args[1].strip('()') == 'count':
+            elif args[1].strip("()") == "count":
                 self.obj_count(args[0])
-            elif args[1].split('(')[0] == 'show':
-                self.do_show(args[0]+' '+args[1].split('(')[1].strip(')'))
-            elif args[1].split('(')[0] == 'destroy':
-                self.do_destroy(args[0]+' '+args[1].split('(')[1].strip(')'))
-            elif args[1].split('(')[0] == 'update':
+            elif args[1].split("(")[0] == "show":
+                self.do_show(args[0] + " " + args[1].split("(")[1].strip(")"))
+            elif args[1].split("(")[0] == "destroy":
+                self.do_destroy(args[0] + " " + args[1].split("(")[1].strip(")"))
+            elif args[1].split("(")[0] == "update":
                 arg0 = args[0]
-                if ', ' not in args[1]:
-                    arg1 = args[1].split('(')[1].strip(')')
-                    self.do_update(arg0+' '+arg1)
-                elif ', ' in args[1] and\
-                     '{' in args[1] and ':' in args[1]:
-                    arg1 = args[1].split('(')[1].strip(')').split(', ', 1)[0]
-                    attr_dict = ast.literal_eval(args[1].split('(')[1]
-                                                 .strip(')').split(', ', 1)[1])
+                if ", " not in args[1]:
+                    arg1 = args[1].split("(")[1].strip(")")
+                    self.do_update(arg0 + " " + arg1)
+                elif ", " in args[1] and "{" in args[1] and ":" in args[1]:
+                    arg1 = args[1].split("(")[1].strip(")").split(", ", 1)[0]
+                    attr_dict = ast.literal_eval(
+                        args[1].split("(")[1].strip(")").split(", ", 1)[1]
+                    )
                     # Note: json.loads NOT working here w/ single-quoted values
                     # attr_dict = json.loads(args[1].split('(')[1].strip(')')\
                     # .split(', ', 1)[1])
                     for key, value in attr_dict.items():
-                        self.do_update(arg0+' '+arg1+' '+key+' '+str(value))
-                elif ', ' in args[1] and\
-                     len(args[1].split('(')[1].strip(')').split(', ')) == 2:
-                    arg1 = args[1].split('(')[1].strip(')').split(', ')[0]
-                    arg2 = args[1].split('(')[1].strip(')').split(', ')[1]
-                    self.do_update(arg0+' '+arg1+' '+arg2)
-                elif ', ' in args[1] and\
-                     len(args[1].split('(')[1].strip(')').split(', ')) >= 3:
+                        self.do_update(arg0 + " " + arg1 + " " + key + " " + str(value))
+                elif (
+                    ", " in args[1]
+                    and len(args[1].split("(")[1].strip(")").split(", ")) == 2
+                ):
+                    arg1 = args[1].split("(")[1].strip(")").split(", ")[0]
+                    arg2 = args[1].split("(")[1].strip(")").split(", ")[1]
+                    self.do_update(arg0 + " " + arg1 + " " + arg2)
+                elif (
+                    ", " in args[1]
+                    and len(args[1].split("(")[1].strip(")").split(", ")) >= 3
+                ):
                     print(args[1])
-                    arg1 = args[1].split('(')[1].strip(')').split(', ')[0]
+                    arg1 = args[1].split("(")[1].strip(")").split(", ")[0]
                     print(arg1)
-                    arg2 = args[1].split('(')[1].strip(')').split(', ')[1]
+                    arg2 = args[1].split("(")[1].strip(")").split(", ")[1]
                     print(arg2)
-                    arg3 = args[1].split('(')[1].strip(')').split(', ')[2]
+                    arg3 = args[1].split("(")[1].strip(")").split(", ")[2]
                     print(arg3)
-                    self.do_update(arg0+' '+arg1+' '+arg2+' '+arg3)
+                    self.do_update(arg0 + " " + arg1 + " " + arg2 + " " + arg3)
             else:
-                print('*** Unknown syntax: {}'.format(arg))
+                print("*** Unknown syntax: {}".format(arg))
         else:
             print("** class doesn't exist **")
 
@@ -186,7 +191,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             counter = 0
             for key, obj in models.storage._FileStorage__objects.items():
-                if arg == key.split('.')[0]:
+                if arg == key.split(".")[0]:
                     counter += 1
             print(counter)
 
@@ -206,20 +211,19 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0]+'.'+args[1] not in models.storage\
-                                              ._FileStorage__objects.keys():
+        elif args[0] + "." + args[1] not in models.storage._FileStorage__objects.keys():
             print("** no instance found **")
         elif len(args) == 2:
             print("** attribute name missing **")
         elif len(args) == 3:
             print("** value missing **")
         else:
-            obj = models.storage._FileStorage__objects[args[0]+'.'+args[1]]
+            obj = models.storage._FileStorage__objects[args[0] + "." + args[1]]
             if args[2] in obj.__dict__.keys():
                 try:
                     if args[3].isdigit():
                         args[3] = int(args[3])
-                    elif args[3].replace('.', '', 1).isdigit():
+                    elif args[3].replace(".", "", 1).isdigit():
                         args[3] = float(args[3])
                 except AttributeError:
                     pass
@@ -228,7 +232,7 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     if args[3].isdigit():
                         args[3] = int(args[3])
-                    elif args[3].replace('.', '', 1).isdigit():
+                    elif args[3].replace(".", "", 1).isdigit():
                         args[3] = float(args[3])
                 except AttributeError:
                     pass
@@ -264,5 +268,6 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
