@@ -1,12 +1,13 @@
 footer {
-    background-color: #00FF00;
     height: 60px;
+    background-color: #00FF00;
+    position: absolute;
     width: 100%;
-    text-align: center;
-    position: fixed;
     bottom: 0;
+    left: 0;
 }
 
-footer p {
-    vertical-align: middle;
+p {
+    text-align: center;
+    padding: 6px;
 }

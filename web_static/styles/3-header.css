@@ -1,13 +1,14 @@
 header {
+    background-color: #fff;
     height: 70px;
     width: 100%;
-    border-bottom-width: 1px;
-    border-color: #CCCCCC;
-    border-bottom: solid;
+    border-bottom: 1px solid #CCCCCC;
 }
 
-.logo{
-    content: url(../images/logo.png);
+.logo {
+    background: url("../images/logo.png") no-repeat;
+    background-position: left;
+    display: block;
+    height: 100%;
     margin-left: 20px;
-    vertical-align: middle;
 }

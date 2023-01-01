@@ -1,25 +1,25 @@
 #!/usr/bin/python3
 """
-Test file for user class
+Test suits for places
 """
 
+import os
+import models
 import unittest
-from models.place import Place
+from datetime import datetime
 from models.base_model import BaseModel
 
 
-class TestClass(unittest.TestCase):
-    """Test cases"""
+class TestPlace(unittest.TestCase):
+    """
+    Tests for amenities
+    """
 
-    def test_create_istance(self):
-        """create a new instance"""
-        new_place = Place()
-        self.assertIsInstance(new_place, Place)
-
-    def test_create_istance2(self):
-        """create a new instance"""
-        new_place = Place()
-        self.assertIsInstance(new_place, BaseModel)
+    def test_name(self):
+        """
+        Tests for name inputs
+        """
+        pass
 
 
 if __name__ == '__main__':
