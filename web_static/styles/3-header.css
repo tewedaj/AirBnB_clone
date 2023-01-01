@@ -1,14 +1,14 @@
 header {
-    background-color: #fff;
+    position: relative;
     height: 70px;
     width: 100%;
+    background-color: white;
     border-bottom: 1px solid #CCCCCC;
 }
-
-.logo {
-    background: url("../images/logo.png") no-repeat;
-    background-position: left;
-    display: block;
-    height: 100%;
-    margin-left: 20px;
+header div.logo {
+    position: absolute;
+    width: 142px;
+    height: 60px;
+    background-image: url(../images/logo.png);
+    left: 20px;
 }
