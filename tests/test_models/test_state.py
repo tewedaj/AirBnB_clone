@@ -1,20 +1,17 @@
 #!/usr/bin/python3
-
+"""
+Test suite for base_model
+"""
 import unittest
+from models.base_model import BaseModel
 from models.state import State
 
 
-class TestState_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the State class."""
+class TestBaseModel(unittest.TestCase):
+    def test_attr(self):
+        state = State()
+        self.assertEqual(state.name, "")
 
-    def test_no_args_instantiates(self):
-        self.assertEqual(State, type(State()))
-
-    def test_name_is_public_class_attribute(self):
-        st = State()
-        self.assertEqual(str, type(State.name))
-        self.assertIn("name", dir(st))
-        self.assertNotIn("name", st.__dict__)
-
-if __name__ == "__main__":
-    unittest.main()
+    def test_parent(self):
+        state = State()
+        self.assertTrue(isinstance(state, BaseModel))
